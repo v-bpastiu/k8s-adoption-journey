@@ -1,8 +1,10 @@
 name: Github Telemetry Scheduled Job
 
-on:
-  schedule:
-    - cron: "0 0 * * MON"
+# on:
+#   schedule:
+#     - cron: "0 0 * * MON"
+
+on: push
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -13,9 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Run telemetry script
+      - name: Install dependencies
         working-directory: ./github-telemetry
         with:
            python-version: '3.10' 
         run: pip3 install -r requirements.txt
+
+      - name: Run script
+        with:
+            python-version: '3.10' 
         run: python3 github-telemetry.py
