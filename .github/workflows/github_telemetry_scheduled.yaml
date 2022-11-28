@@ -50,7 +50,7 @@ jobs:
           git checkout -b weekly-telemetry-branch/${{ steps.date.outputs.date }}
           cd github-telemetry
           git add clones.csv views.csv plot-clones.png plot-views.png
-          gh pr create -B main -H weekly-telemetry-branch/${{ steps.date.outputs.date }} --title 'Weekly github telemetry data' --body 'Created by Github action'
+          gh pr create -B main -H weekly-telemetry-branch/${{ steps.date.outputs.date }} --title 'Weekly github telemetry data test' --body 'Created by Github action'
         )
       
 
