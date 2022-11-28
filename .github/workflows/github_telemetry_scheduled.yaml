@@ -46,8 +46,10 @@ jobs:
 
       - name: Check if there are uncommited changes
         run: |
-          outputs=$(git diff github-telemetry)
-          echo "changes_detected=true" >> $GITHUB_OUTPUT 
+          diffs=$(git diff github-telemetry)
+          if [ -z "${diffs}" ]; then
+            echo "changes_detected=true" >> $GITHUB_OUTPUT 
+          fi
         id: changes_diff
 
       - name: Create new branch, commit, push and create PR if there are changes
