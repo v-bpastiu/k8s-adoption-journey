@@ -52,5 +52,7 @@ jobs:
             git add clones.csv views.csv plot-clones.png plot-views.png
             gh pr create -B main -H weekly-telemetry-branch/${{ steps.date.outputs.date }} --title 'Weekly github telemetry data test' --body 'Created by Github action'
           )
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
 
