@@ -42,7 +42,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          
+
       - name: Check if there are uncommited changes
         run: |
           outputs=$(git diff github-telemetry)
@@ -57,7 +57,7 @@ jobs:
             cd github-telemetry
             git add clones.csv views.csv plot-clones.png plot-views.png
             git commit -m "Adding weekly telemetry data."
-            gh pr create -B main -H weekly-telemetry-branch/${{ steps.date.outputs.date }} --title 'Weekly github telemetry data.' --body 'Created by Github actions.'
+            gh pr create -B v-bpastiu/k8s-adoption-journey:main -H v-bpastiu/k8s-adoption-journey:weekly-telemetry-branch/${{ steps.date.outputs.date }} --title 'Weekly github telemetry data.' --body 'Created by Github actions.'
           )
 
       
