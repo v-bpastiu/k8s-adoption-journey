@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "date::$(date +'%Y-%m-%d')" >> date
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -46,19 +46,19 @@ jobs:
       - name: Check if there are uncommited changes
         run: |
           outputs=$(git diff github-telemetry)
-          echo '::set-output name=changes_detected::false' 
+          echo $outputs
+          echo 'changes_detected::true' >> changes_detected 
         id: changes_diff
 
-      - name: Create new branch, commit, push and create PR if there are changes
-        if: steps.changes_diff.outputs.trigger_branch_creation == false
-        run: |
-          (
-            git checkout -b weekly-telemetry-branch/${{ steps.date.outputs.date }}
-            cd github-telemetry
-            git add clones.csv views.csv plot-clones.png plot-views.png
-            git commit -m "Adding weekly telemetry data."
-            gh pr create -B main -H v-bpastiu/k8s-adoption-journey:weekly-telemetry-branch/${{ steps.date.outputs.date }} --repo v-bpastiu/k8s-adoption-journey --title 'Weekly github telemetry data.' --body 'Created by Github actions.'
-          )
+      # - name: Create new branch, commit, push and create PR if there are changes
+      #   if: steps.changes_diff.outputs.trigger_branch_creation == false
+      #   run: |
+      #     (
+      #       git checkout -b weekly-telemetry-branch/${{ steps.date.outputs.date }}
+      #       cd github-telemetry
+      #       git add clones.csv views.csv plot-clones.png plot-views.png
+      #       git commit -m "Adding weekly telemetry data."
+      #       gh pr create -B main -H v-bpastiu/k8s-adoption-journey:weekly-telemetry-branch/${{ steps.date.outputs.date }} --repo v-bpastiu/k8s-adoption-journey --title 'Weekly github telemetry data.' --body 'Created by Github actions.'
+      #     )
 
-      
-
+  
