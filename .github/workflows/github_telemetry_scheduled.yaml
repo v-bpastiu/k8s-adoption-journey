@@ -7,7 +7,7 @@ name: Github Telemetry Scheduled Job
 on: push
 
 env:
-  GITHUB_TOKEN: ${{ secrets.PAT }}
+  PAT: ${{ secrets.PAT }}
 
 jobs:
   githubTelemetry:
