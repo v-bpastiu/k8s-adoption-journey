@@ -6,12 +6,14 @@ name: Github Telemetry Scheduled Job
 
 on: push
 
-permissions:
-  actions: write
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  singleJobName:
+  githubTelemetry:
     runs-on: ubuntu-latest
+    permissions:
+      repository-projects: write 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
