@@ -14,7 +14,7 @@ jobs:
   githubTelemetry:
     runs-on: ubuntu-latest
     outputs:
-      trigger_branch_creation: ${{ steps.changes_diff.outputs.changes_detected }}
+      changes_detected: ${{ steps.changes_diff.outputs.changes_detected }}
       date: ${{ steps.date.outputs.date }}
     steps:
       - name: Get current date
@@ -51,7 +51,7 @@ jobs:
         id: changes_diff
 
       - name: Create new branch, commit, push and create PR if there are changes
-        if: steps.changes_diff.outputs.trigger_branch_creation == false
+        if: steps.changes_diff.outputs.trigger_branch_creation == true
         run: |
           (
             git checkout -b weekly-telemetry-branch/${{ steps.date.outputs.date }}
