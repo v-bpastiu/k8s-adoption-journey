@@ -40,6 +40,6 @@ jobs:
         id: changes_diff
 
       - name: Create new branch if there are changes
-        if: steps.changes_diff.outputs.changes_detected == true
+        if: steps.changes_diff.outputs.trigger_branch_creation == true
         run: git checkout -b weekly-telemetry-branch/${{ github.event.repository.updated_at}}
 
