@@ -47,7 +47,7 @@ jobs:
         run: |
           outputs=$(git diff github-telemetry)
           echo $outputs
-          echo 'changes_detected::true' >> changes_detected 
+          echo 'changes_detected::true' >> trigger_branch_creation 
         id: changes_diff
 
       # - name: Create new branch, commit, push and create PR if there are changes
