@@ -43,7 +43,14 @@ jobs:
           echo '::set-output name=changes_detected::false' 
         id: changes_diff
 
-      - name: Create new branch if there are changes
+      - name: Create new branch, commit, push and create PR if there are changes
         if: steps.changes_diff.outputs.trigger_branch_creation == false
-        run: git checkout -b weekly-telemetry-branch/${{ steps.date.outputs.date }}
+        run: |
+        (
+          git checkout -b weekly-telemetry-branch/${{ steps.date.outputs.date }}
+          cd github-telemetry
+          git add clones.csv views.csv plot-clones.png plot-views.png
+          gh pr create -B main -H weekly-telemetry-branch/${{ steps.date.outputs.date }} --title 'Weekly github telemetry data' --body 'Created by Github action'
+        )
+      
 
