@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -48,11 +48,11 @@ jobs:
         run: |
           outputs=$(git diff github-telemetry)
           echo $outputs
-          echo 'changes_detected=true' >> trigger_branch_creation 
+          echo 'changes_detected=true' >> $GITHUB_OUTPUT 
         id: changes_diff
 
       - name: Create new branch, commit, push and create PR if there are changes
-        if: steps.changes_diff.outputs.trigger_branch_creation == false
+        if: steps.changes_diff.outputs.trigger_branch_creation == true
         run: |
           (
             git checkout -b weekly-telemetry-branch/${{ steps.date.outputs.date }}
