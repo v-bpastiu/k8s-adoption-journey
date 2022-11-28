@@ -35,10 +35,10 @@ def create_data_frame(csv):
 
 
 if __name__ == "__main__":
-    if "GITHUB_TOKEN" not in os.environ:
-        raise EnvironmentError("GITHUB_TOKEN environment variable is not set!")
+    if "PAT" not in os.environ:
+        raise EnvironmentError("PAT environment variable is not set!")
         
-    g = Github(os.getenv("GITHUB_TOKEN"))
+    g = Github(os.getenv("PAT"))
     repo = g.get_repo(TARGET_REPOSITORY)
     views = repo.get_views_traffic(per="day")
     clones = repo.get_clones_traffic(per="day")
