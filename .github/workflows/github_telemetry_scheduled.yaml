@@ -36,10 +36,10 @@ jobs:
       - name: Check if there are uncommited changes
         run: |
           outputs=$(git diff github-telemetry)
-          echo '::set-output name=changes_detected::true' 
+          echo '::set-output name=changes_detected::false' 
         id: changes_diff
 
       - name: Create new branch if there are changes
-        if: steps.changes_diff.outputs.trigger_branch_creation == true
+        if: steps.changes_diff.outputs.trigger_branch_creation == false
         run: git checkout -b weekly-telemetry-branch/${{ github.event.repository.updated_at}}
 
