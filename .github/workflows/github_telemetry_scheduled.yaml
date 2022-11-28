@@ -8,6 +8,7 @@ on: push
 
 env:
   PAT: ${{ secrets.PAT }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   githubTelemetry:
@@ -53,7 +54,6 @@ jobs:
             git commit -m "Adding weekly telemetry data."
             gh pr create -B main -H weekly-telemetry-branch/${{ steps.date.outputs.date }} --title 'Weekly github telemetry data.' --body 'Created by Github actions.'
           )
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       
 
