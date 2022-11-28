@@ -47,11 +47,11 @@ jobs:
       - name: Check if there are uncommited changes
         run: |
           outputs=$(git diff github-telemetry)
-          echo "changes_detected=indeed" >> $GITHUB_OUTPUT 
+          echo "changes_detected=true" >> $GITHUB_OUTPUT 
         id: changes_diff
 
       - name: Create new branch, commit, push and create PR if there are changes
-        if: steps.changes_diff.outputs.changes_detected == indeed
+        if: steps.changes_diff.outputs.changes_detected == 'true'
         run: |
           (
             git checkout -b weekly-telemetry-branch/${{ steps.date.outputs.date }}
