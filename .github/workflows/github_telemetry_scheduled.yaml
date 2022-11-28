@@ -13,7 +13,7 @@ jobs:
   githubTelemetry:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.changesExist.outputs.changes }}
+      trigger_branch_creation: ${{ steps.changes_diff.outputs.changes_detected }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,10 +34,12 @@ jobs:
           )
 
       - name: Check if there are uncommited changes
-        run: 'git diff github-telemetry'
-        id: changesExist
+        run: |
+          outputs=$(git diff github-telemetry)
+          echo '::set-output name=changes_detected::true' 
+        id: changes_diff
 
       - name: Create new branch if there are changes
-        if: steps.changesExist.output.changes == true
+        if: steps.changes_diff.outputs.changes_detected == true
         run: git checkout -b weekly-telemetry-branch/${{ github.event.repository.updated_at}}
 
