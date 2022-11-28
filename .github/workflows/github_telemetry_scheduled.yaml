@@ -12,6 +12,8 @@ env:
 jobs:
   githubTelemetry:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.changesExist.outputs.changes }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,3 +32,12 @@ jobs:
             pip install -r requirements.txt
             python3 github-telemetry.py
           )
+
+      - name: Check if there are uncommited changes
+        run: 'git diff github-telemetry'
+        id: changesExist
+
+      - name: Create new branch if there are changes
+        if: steps.changesExist.output.changes == true
+        run: git checkout -b weekly-telemetry-branch/${{ github.event.repository.updated_at}}
+
